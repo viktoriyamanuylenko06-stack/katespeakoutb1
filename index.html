@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate's Learning Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --terra:    #C97C63;
+  --terra-d:  #A85C46;
+  --terra-l:  #F7ECE6;
+  --mauve:    #A9899E;
+  --mauve-d:  #82647A;
+  --mauve-l:  #F3ECF1;
+  --sage:     #8B9B7E;
+  --sage-d:   #647159;
+  --sage-l:   #EEF1E9;
+  --sand:     #C9A97A;
+  --sand-d:   #A3835A;
+  --sand-l:   #F6EFE3;
+  --plum:     #8E6FA8;
+  --plum-d:   #6B4F82;
+  --ink:      #211C1A;
+  --muted:    #8A8078;
+  --border:   rgba(33,28,26,.10);
+  --bg:       #FBF8F4;
+  --white:    #FFFFFF;
+  --shadow:   rgba(33,28,26,.08);
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 620px 420px at 8% -8%, rgba(201,124,99,.14) 0%, transparent 70%),
+    radial-gradient(ellipse 520px 380px at 100% 100%, rgba(169,137,158,.13) 0%, transparent 70%);
+}
+
+header {
+  position: relative;
+  z-index: 1;
+  padding: 3.6rem 1.5rem 0;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.header-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  opacity: 0;
+  animation: up .55s ease forwards .1s;
+}
+
+.header-index {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--terra-d);
+}
+
+.header-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.header-tag {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  margin-top: 1.1rem;
+  opacity: 0;
+  animation: up .65s ease forwards .2s;
+}
+h1 em {
+  font-style: italic;
+  color: var(--terra-d);
+}
+
+.header-sub {
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: .8rem;
+  max-width: 380px;
+  opacity: 0;
+  animation: up .65s ease forwards .32s;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 2.6rem auto 0;
+  padding: 0 1.25rem 5rem;
+}
+
+.sec-label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 2.4rem 0 .9rem;
+  opacity: 0;
+  animation: up .45s ease forwards .4s;
+}
+.sec-label .idx {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--terra-d);
+}
+.sec-label .txt {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-1 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+
+@media (max-width: 620px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.4rem 1.4rem 1.2rem;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  opacity: 0;
+  animation: up .45s ease forwards;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px var(--shadow);
+  border-color: var(--c);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--c);
+}
+
+.card-cat {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--c);
+}
+
+.card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.22rem;
+  font-weight: 600;
+  line-height: 1.18;
+  margin-top: .1rem;
+}
+
+.card p {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  line-height: 1.5;
+  flex: 1;
+  margin-top: .05rem;
+}
+
+.card-arrow {
+  align-self: flex-end;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--c);
+  margin-top: .5rem;
+  flex-shrink: 0;
+  transition: background .18s, color .18s, border-color .18s;
+}
+.card:hover .card-arrow {
+  background: var(--c);
+  color: white;
+  border-color: var(--c);
+}
+
+.card:nth-child(1) { animation-delay: .1s }
+.card:nth-child(2) { animation-delay: .16s }
+
+footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 1rem 1.5rem 2.6rem;
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+@keyframes up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <span class="header-index">01</span>
+    <span class="header-line"></span>
+    <span class="header-tag">English course</span>
+  </div>
+  <h1>Kate's <em>Learning Space</em></h1>
+  <p class="header-sub">Everything for your lessons — books, audio, board, and payments, all in one place.</p>
+</header>
+
+<main>
+
+  <!-- BOOKS -->
+  <div class="sec-label"><span class="idx">i.</span><span class="txt">Books</span></div>
+  <div class="grid-2">
+
+    <a class="card" href="https://drive.google.com/file/d/1U_BaGKYQzw60Rw1mZkkePWCDyZH6NJIs/view?usp=sharing" target="_blank" style="--c:#A85C46">
+      <div class="card-cat">Textbook</div>
+      <h3>Student's Book</h3>
+      <p>Your main coursebook — open anytime.</p>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="https://drive.google.com/file/d/1nhDexiXxQyeRVv_DRo31erTst_ADJWGe/view?usp=sharing" target="_blank" style="--c:#82647A">
+      <div class="card-cat">Practice</div>
+      <h3>Workbook</h3>
+      <p>Exercises and tasks for each unit.</p>
+      <div class="card-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- AUDIO -->
+  <div class="sec-label"><span class="idx">ii.</span><span class="txt">Audio</span></div>
+  <div class="grid-2">
+
+    <a class="card" href="https://drive.google.com/drive/folders/1FOkj3jIcZ72X0P-sys3218mH_0OVq9HO?usp=sharing" target="_blank" style="--c:#647159">
+      <div class="card-cat">Audio</div>
+      <h3>Student's Book Audio</h3>
+      <p>All listening tracks for the Student's Book.</p>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="https://drive.google.com/drive/folders/1MSb4BP2JG4CqwbDh8L98-9JAcLLRiMvp?usp=drive_link" target="_blank" style="--c:#A3835A">
+      <div class="card-cat">Audio</div>
+      <h3>Workbook Audio</h3>
+      <p>All listening tracks for the Workbook.</p>
+      <div class="card-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- BOARD & FINANCE -->
+  <div class="sec-label"><span class="idx">iii.</span><span class="txt">Board &amp; Finance</span></div>
+  <div class="grid-2">
+
+    <a class="card" href="https://miro.com/welcomeonboard/RzdSNGw1bnREY2g0YUU0OVVFSHFKalNySFZPWUt5c0dsamQ3WDZlc0JCN21kM2F4dnRBcGJ4RCtwdk4yUlRYemNxc3g1UmxmZGtjSUVHRTlGaXJmTlhrNVdaZFN4cnJ0THd4R1p2Qnh2M0lncDNJazA3YVFzNUZESDJ5Z0VaSG1yVmtkMG5hNDA3dVlncnBvRVB2ZXBnPT0hdjE=?share_link_id=235550222225" target="_blank" style="--c:#6B4F82">
+      <div class="card-cat">Board</div>
+      <h3>Miro Board</h3>
+      <p>Our shared whiteboard for lesson notes and tasks.</p>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="https://docs.google.com/spreadsheets/d/1nnPFEIoqCnWyZJJ4-3ry6CPSMBX8BA1919WAkwXM0vk/edit?usp=sharing" target="_blank" style="--c:#A85C46">
+      <div class="card-cat">Finance</div>
+      <h3>Payment Schedule</h3>
+      <p>Track lesson payments and upcoming dates.</p>
+      <div class="card-arrow">→</div>
+    </a>
+
+  </div>
+
+</main>
+
+<footer>Kate's Learning Space</footer>
+
+</body>
+</html>
